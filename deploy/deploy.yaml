@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mgmt-redis
+  namespace: default
+  labels:
+    app: mgmt-redis
+spec:
+  selector:
+    matchLabels:
+      app: mgmt-redis
+  template:
+    metadata:
+      labels:
+        app: mgmt-redis
+      annotations:
+        kubectl.kubernetes.io/default-container: app
+    spec:
+      containers:
+      - name: app
+        image: ghcr.io/binkhq/mgmt-redis:latest
+        command: ["tail", "-f", "/dev/null"]
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "1000m"
